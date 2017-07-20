@@ -6,14 +6,13 @@ env.mk: .env
 .PHONY: all build push
 .DEFAULT_GOAL := build
 
+GIT_COMMIT=$(shell git rev-parse HEAD | cut -c 1-10)
+
 all: build push
 
 build:
-	sudo docker build --build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) -t azmo/base .
+	$(info GIT_COMMIT=$(GIT_COMMIT))
+	sudo docker build --build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) -t azmo/base:latest -t azmo/base:$(GIT_COMMIT) -t azmo/base:confd-s6-latest .
 
 push:
 	sudo FFMPEG_BUILD=$(FFMPEG_BUILD) docker-compose push
-
-encode:
-	$(info ENCODEDIR=$(ENCODEDIR) RUID=$(RUID) RGID=$(RGID))
-	sudo chown -R $(RUID):$(RGID) $(ENCODEDIR)/input && sudo FFMPEG_BUILD=$(FFMPEG_BUILD) docker-compose run --rm h265ize
