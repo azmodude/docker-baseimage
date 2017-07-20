@@ -1,17 +1,15 @@
-FROM golang:latest as confd
+FROM golang:latest as remco
 
 ENV GOPATH /go
 
-RUN mkdir -p $GOPATH/src/github.com/bacongobbler && \
-        git clone https://github.com/bacongobbler/confd.git $GOPATH/src/github.com/bacongobbler/confd && \
-        cd $GOPATH/src/github.com/bacongobbler/confd && \
-        ./build && \
-        mv bin/confd /
+RUN go get github.com/HeavyHorst/remco/cmd/remco && \
+        go install github.com/HeavyHorst/remco/cmd/remco && \
+        mv ${GOPATH}/bin/remco /remco
 
 FROM debian:stable-slim
 LABEL maintainer "Gordon Schulz <gordon.schulz@gmail.com>"
 
-COPY --from=confd /confd /usr/local/bin/confd
+COPY --from=remco /remco /usr/local/bin/remco
 
 RUN apt-get update && apt-get -y --no-install-recommends install curl ca-certificates && \
         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
