@@ -1,6 +1,6 @@
--include env.mk
+-include .env.mk
 
-env.mk: .env
+.env.mk: .env
 		sed 's/"//g ; s/=/:=/' < $< > $@
 
 .PHONY: all build push
