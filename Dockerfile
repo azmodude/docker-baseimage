@@ -11,7 +11,8 @@ LABEL maintainer "Gordon Schulz <gordon.schulz@gmail.com>"
 
 COPY --from=remco /remco /usr/local/bin/remco
 
-RUN apt-get update && apt-get -y --no-install-recommends install curl ca-certificates && \
+RUN apt-get update && apt-get -y --no-install-recommends install \
+        apt-transport-https curl ca-certificates && \
         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG S6_OVERLAY_VERSION
