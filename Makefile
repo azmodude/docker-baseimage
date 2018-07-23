@@ -12,8 +12,8 @@ all: build push
 
 build:
 	$(info GIT_COMMIT=$(GIT_COMMIT))
-	sudo docker build --pull --build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) -t azmo/base:ubuntu -t azmo/base:ubuntu-$(GIT_COMMIT) -t azmo/base:ubuntu-s6-remco .
+	sudo docker build --pull --build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) \
+		--build-arg GOSU_VERSION=$(GOSU_VERSION) -t azmo/base:ubuntu-latest -t azmo/base:ubuntu-latest-$(GIT_COMMIT) .
 
 push:
-	sudo docker push azmo/base:ubuntu
-	sudo docker push azmo/base:ubuntu-s6-remco
+	sudo docker push azmo/base:ubuntu-latest
