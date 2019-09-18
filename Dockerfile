@@ -1,11 +1,9 @@
 FROM ubuntu:latest
 LABEL maintainer="Gordon Schulz <gordon.schulz@gmail.com>"
 
-COPY --from=builder /remco /usr/local/bin/remco
-COPY --from=builder /gosu /usr/local/bin/gosu
-
 RUN apt-get update && apt-get -y --no-install-recommends install \
-        apt-transport-https curl ca-certificates software-properties-common && \
+        apt-transport-https curl ca-certificates software-properties-common \
+        setpriv && \
         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG S6_OVERLAY_VERSION
