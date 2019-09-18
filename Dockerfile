@@ -1,38 +1,3 @@
-FROM golang:latest as builder
-
-ENV GOPATH /go
-
-RUN go get github.com/HeavyHorst/remco/cmd/remco && \
-        go install github.com/HeavyHorst/remco/cmd/remco && \
-        mv ${GOPATH}/bin/remco /remco
-
-ARG GOSU_VERSION
-RUN set -ex; \
-	\
-	fetchDeps=' \
-		ca-certificates \
-		wget \
-	'; \
-	apt-get update; \
-	apt-get install -y --no-install-recommends $fetchDeps; \
-	rm -rf /var/lib/apt/lists/*; \
-	\
-	dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
-	wget -O /gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch"; \
-	wget -O /gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc"; \
-	\
-# verify the signature
-	export GNUPGHOME="$(mktemp -d)"; \
-	gpg --keyserver pgp.mit.edu --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4; \
-	gpg --batch --verify /gosu.asc /gosu; \
-	rm -rf "$GNUPGHOME" /gosu.asc; \
-	\
-	chmod +x /gosu; \
-# verify that the binary works
-	/gosu nobody true; \
-	\
-	apt-get purge -y --auto-remove $fetchDeps
-
 FROM ubuntu:latest
 LABEL maintainer="Gordon Schulz <gordon.schulz@gmail.com>"
 
