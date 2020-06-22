@@ -1,7 +1,5 @@
 FROM ubuntu:latest
 LABEL maintainer="Gordon Schulz <gordon.schulz@gmail.com>"
-ARG COMMIT_SHA=unspecified
-LABEL commit_sha=${COMMIT_SHA}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -18,3 +16,6 @@ RUN curl -s -S -L -o /tmp/s6-overlay-amd64.tar.gz \
         rm /tmp/s6-overlay-amd64.tar.gz
 
 ENTRYPOINT ["/init"]
+
+ARG COMMIT_SHA=unspecified
+LABEL commit_sha=${COMMIT_SHA}
