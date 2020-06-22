@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 LABEL maintainer="Gordon Schulz <gordon.schulz@gmail.com>"
+ARG COMMIT_SHA=unspecified
+LABEL commit_sha=${COMMIT_SHA}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
