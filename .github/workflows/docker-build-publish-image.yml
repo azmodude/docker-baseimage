@@ -16,7 +16,7 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: azmo/base
-          username: ${{ GITHUB_ACTOR }}
+          username: ${{ GITHUB.ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
           buildargs: S6_OVERLAY_VERSION
           registry: docker.pkg.github.com
