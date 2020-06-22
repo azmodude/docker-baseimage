@@ -20,7 +20,7 @@ jobs:
         id: get_sha
       - name: Set ENV variables
         run: for v in `cat .env` ; do echo "::set-env name=${v%%=*}::${v##*=}" ; done
-      - name: Publish to Registry
+      - name: Publish to GitHub Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: ${{ GITHUB.REPOSITORY }}/base
@@ -29,4 +29,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           buildargs: S6_OVERLAY_VERSION
           registry: docker.pkg.github.com
-
+      - name: Publish to Docker Hub
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: azmo/base
+          tags: "${{ steps.extract_branch.outputs.branch }},${{ steps.extract_branch.outputs.branch }}-${{ steps.get_sha.outputs.sha }}"
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          buildargs: S6_OVERLAY_VERSION
+          registry: registry.hub.docker.com
