@@ -10,13 +10,17 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Set ENV variables
         run: for v in `cat .env` ; do echo "::set-env name=${v%%=*}::${v##*=}" ; done
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: ${{ GITHUB.REPOSITORY }}/base
-          tags: ubuntu-latest
+          tags: ${{ steps.extract_branch.outputs.branch }}
           username: ${{ GITHUB.ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
           buildargs: S6_OVERLAY_VERSION
