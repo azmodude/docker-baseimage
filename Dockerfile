@@ -3,7 +3,7 @@ LABEL maintainer="Gordon Schulz <gordon.schulz@gmail.com>"
 
 RUN apt-get update && apt-get -y --no-install-recommends install \
         apt-transport-https curl ca-certificates software-properties-common \
-        setpriv && \
+        util-linux && \
         apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG S6_OVERLAY_VERSION
