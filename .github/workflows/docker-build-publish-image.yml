@@ -15,7 +15,8 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: azmo/base
+          name: azmo/azmo-base/base
+          tags: ubuntu-latest
           username: ${{ GITHUB.ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
           buildargs: S6_OVERLAY_VERSION
