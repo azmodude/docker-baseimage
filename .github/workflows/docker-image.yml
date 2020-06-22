@@ -1,13 +1,14 @@
+---
 name: Docker Image CI
 
 on:
   push:
-    branches: [ ubuntu-latest ]
+    branches: [ubuntu-latest]
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag azmo/base:ubuntu-latest --tag azmo/base:ubuntu-latest-$(date +%s)
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --pull --file Dockerfile --build-arg S6_OVERLAY_VERSION=$(sed -r 's/S6_OVERLAY_VERSION=(.*)/\1/' .env) --tag azmo/base:ubuntu-latest --tag azmo/base:ubuntu-latest-$(date +%s)
