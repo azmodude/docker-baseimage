@@ -1,6 +1,8 @@
 FROM ubuntu:latest
 LABEL maintainer="Gordon Schulz <gordon.schulz@gmail.com>"
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get -y --no-install-recommends install \
         apt-transport-https curl ca-certificates software-properties-common \
         util-linux && \
