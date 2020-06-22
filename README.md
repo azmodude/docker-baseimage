@@ -1,4 +1,6 @@
-### docker-azmo-base
+### Azmo's Docker Base Image
+
+![Build and publish Docker Image](https://github.com/azmodude/docker-azmo-base/workflows/Build%20and%20publish%20Docker%20Image/badge.svg)
 
 ![Build and publish Docker Image](https://github.com/azmodude/docker-azmo-base/workflows/Build%20and%20publish%20Docker%20Image/badge.svg)
 
