@@ -14,13 +14,16 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+      - name: Get release version
+        id: get_version
+        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
       - name: Set ENV variables
         run: for v in `cat .env` ; do echo "::set-env name=${v%%=*}::${v##*=}" ; done
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: ${{ GITHUB.REPOSITORY }}/base
-          tags: ${{ steps.extract_branch.outputs.branch }}
+          tags: "${{ steps.extract_branch.outputs.branch }},${{ steps.extract_branch.outputs.branch }}-${{ env.RELEASE_VERSION }}"
           username: ${{ GITHUB.ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
           buildargs: S6_OVERLAY_VERSION
