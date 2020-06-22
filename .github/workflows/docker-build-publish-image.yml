@@ -14,17 +14,17 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - name: Get release version
+      - name: Get commit SHA
         shell: bash
-        run: echo "##[set-output name=ref;]$(echo ${GITHUB_REF:10})"
-        id: get_version
+        run: echo "##[set-output name=sha;]$(echo ${GITHUB_SHA:10})"
+        id: get_sha
       - name: Set ENV variables
         run: for v in `cat .env` ; do echo "::set-env name=${v%%=*}::${v##*=}" ; done
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: ${{ GITHUB.REPOSITORY }}/base
-          tags: "${{ steps.extract_branch.outputs.branch }},${{ steps.extract_branch.outputs.branch }}-${{ steps.get_version.outputs.ref }}"
+          tags: "${{ steps.extract_branch.outputs.branch }},${{ steps.extract_branch.outputs.branch }}-${{ steps.get_sha.outputs.sha }}"
           username: ${{ GITHUB.ACTOR }}
           password: ${{ secrets.GITHUB_TOKEN }}
           buildargs: S6_OVERLAY_VERSION
