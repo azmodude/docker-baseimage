@@ -37,8 +37,8 @@ jobs:
             S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
           tags: |
-            ghcr.io/azmodude/docker-baseimage:alpine
-            ghcr.io/azmodude/docker-baseimage:alpine-${{env.COMMIT_SHA}}
+            ghcr.io/azdfdfmodude/docker-baseimage:alpine
+            ghcr.io/azmodfdfdfdfude/docker-baseimage:alpine-${{env.COMMIT_SHA}}
           push: true
       - name: Build and Push Ubuntu-Latest Image to GitHub Packages
         uses: docker/build-push-action@v2
