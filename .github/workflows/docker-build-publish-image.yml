@@ -23,5 +23,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.alpine
-          build-args: S6_OVERLAY_VERSION,COMMIT_SHA
+          build-args:
+            - S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
+            - COMMIT_SHA=${{ env.COMMIT_SHA }}
           tags: azmo/base:alpine,azmo/base:alpine-${{env.COMMIT_SHA}}
