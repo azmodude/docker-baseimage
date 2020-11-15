@@ -33,42 +33,15 @@ jobs:
         run: echo "COMMIT_SHA=${GITHUB_SHA:10}" >> $GITHUB_ENV
       - name: Set ENV variables from supplied .env file
         run: cat .env >> $GITHUB_ENV
-      - name: Build and Push Alpine Image to GitHub Packages
+      - name: Build and Push Image to GitHub Packages
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.alpine
+          file: ./Dockerfile
           build-args: |
             S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
-          tags: |
-            ghcr.io/azmodude/docker-baseimage:alpine
-            ghcr.io/azmodude/docker-baseimage:alpine-${{env.COMMIT_SHA}}
           push: ${{ github.event_name != 'pull_request' }}
-          #tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-          #          push: true
-      - name: Build and Push Ubuntu-Latest Image to GitHub Packages
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile.ubuntu-latest
-          build-args: |
-            S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
-            COMMIT_SHA=${{ env.COMMIT_SHA }}
-          tags: |
-            ghcr.io/azmodude/docker-baseimage:ubuntu-latest
-            ghcr.io/azmodude/docker-baseimage:ubuntu-latest-${{env.COMMIT_SHA}}
-          push: true
-      - name: Build and Push Ubuntu-Rolling Image to GitHub Packages
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile.ubuntu-rolling
-          build-args: |
-            S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
-            COMMIT_SHA=${{ env.COMMIT_SHA }}
-          tags: |
-            ghcr.io/azmodude/docker-baseimage:ubuntu-rolling
-            ghcr.io/azmodude/docker-baseimage:ubuntu-rolling-${{env.COMMIT_SHA}}
-          push: true
+          # push: true
