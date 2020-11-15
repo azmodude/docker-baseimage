@@ -1,6 +1,6 @@
 ### Azmo's Docker Base Image
 
-![Build and publish Docker Image](https://github.com/azmodude/docker-azmo-base/workflows/Build%20and%20publish%20Docker%20Image/badge.svg)
+![Publish Docker image](https://github.com/azmodude/docker-baseimage/workflows/Publish%20Docker%20image/badge.svg)
 
 An image based on [alpine:latest](https://hub.docker.com/_/alpine) (tag: `alpine`),
 [ubuntu-latest](https://hub.docker.com/_/ubuntu) (tag: `ubuntu-latest`) or
