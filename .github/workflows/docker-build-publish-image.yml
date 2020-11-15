@@ -37,6 +37,7 @@ jobs:
           tags: |
             ghcr.io/azmodude/docker-baseimage:alpine
             ghcr.io/azmodude/docker-baseimage:alpine-${{env.COMMIT_SHA}}
+          push: true
       - name: Build and Push Ubuntu-Latest Image to GitHub Packages
         uses: docker/build-push-action@v2
         with:
@@ -48,6 +49,7 @@ jobs:
           tags: |
             ghcr.io/azmodude/docker-baseimage:ubuntu-latest
             ghcr.io/azmodude/docker-baseimage:ubuntu-latest-${{env.COMMIT_SHA}}
+          push: true
       - name: Build and Push Ubuntu-Rolling Image to GitHub Packages
         uses: docker/build-push-action@v2
         with:
@@ -59,3 +61,4 @@ jobs:
           tags: |
             ghcr.io/azmodude/docker-baseimage:ubuntu-rolling
             ghcr.io/azmodude/docker-baseimage:ubuntu-rolling-${{env.COMMIT_SHA}}
+          push: true
