@@ -6,14 +6,28 @@
 .PHONY: all build push
 .DEFAULT_GOAL := build
 
-GIT_COMMIT=$(shell git rev-parse HEAD | cut -c 1-10)
+COMMIT_SHA=$(shell git rev-parse HEAD | cut -c 1-10)
 
-all: build push
+all: build-ubuntu-latest build-ubuntu-rolling build-alpine
 
-build:
-	$(info GIT_COMMIT=$(GIT_COMMIT))
-	sudo docker build --pull --build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) \
-		-t azmo/base:ubuntu-latest -t azmo/base:ubuntu-latest-$(GIT_COMMIT) .
-
-push:
-	sudo docker push azmo/base:ubuntu-latest
+build-ubuntu-latest:
+	$(info COMMIT_SHA=$(COMMIT_SHA))
+	sudo docker build -f Dockerfile.ubuntu-latest --pull \
+		--build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) \
+		--build-arg COMMIT_SHA=$(COMMIT_SHA) \
+		-t azmo/base:ubuntu-latest \
+		-t azmo/base:ubuntu-latest-$(COMMIT_SHA) .
+build-ubuntu-rolling:
+	$(info COMMIT_SHA=$(COMMIT_SHA))
+	sudo docker build -f Dockerfile.ubuntu-rolling --pull \
+		--build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) \
+		--build-arg COMMIT_SHA=$(COMMIT_SHA) \
+		-t azmo/base:ubuntu-rolling \
+		-t azmo/base:ubuntu-rolling-$(COMMIT_SHA) .
+build-alpine:
+	$(info COMMIT_SHA=$(COMMIT_SHA))
+	sudo docker build -f Dockerfile.alpine --pull \
+		--build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) \
+		--build-arg COMMIT_SHA=$(COMMIT_SHA) \
+		-t azmo/base:alpine \
+		-t azmo/base:alpine-$(COMMIT_SHA) .
