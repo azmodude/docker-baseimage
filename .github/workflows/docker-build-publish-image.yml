@@ -13,9 +13,9 @@ jobs:
     steps:
       - name: Get commit SHA
         id: get_sha
-        run: echo "::set-env name=COMMIT_SHA::$(echo ${GITHUB_SHA:10})"
-      - name: Set ENV variables
-        run: for v in `cat .env` ; do echo "::set-env name=${v%%=*}::${v##*=}" ; done
+        run: echo "COMMIT_SHA=${GITHUB_SHA:10}" >> $GITHUB_ENV
+      - name: Set ENV variables from supplied .env file
+        run: cat .env >> $GITHUB_ENV
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Push to GitHub Packages
