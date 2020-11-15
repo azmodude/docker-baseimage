@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:rolling
 LABEL maintainer="Gordon Schulz <gordon@gordonschulz.de>"
 
 ENV DEBIAN_FRONTEND=noninteractive
