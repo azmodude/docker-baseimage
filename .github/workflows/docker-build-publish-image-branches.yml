@@ -1,0 +1,39 @@
+---
+name: Build and publish Docker Image
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Get commit SHA
+        id: get_sha
+        run: echo "::set-env name=COMMIT_SHA::$(echo ${GITHUB_SHA:10})"
+      - name: Set ENV variables
+        run: for v in `cat .env` ; do echo "::set-env name=${v%%=*}::${v##*=}" ; done
+      - name: Publish to GitHub Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ GITHUB.REPOSITORY }}/base
+          tags: "${{ steps.extract_branch.outputs.branch }}"
+          username: ${{ GITHUB.ACTOR }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          buildargs: S6_OVERLAY_VERSION,COMMIT_SHA
+          registry: docker.pkg.github.com
+      - name: Publish to Docker Hub
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: azmo/base
+          tags: "${{ steps.extract_branch.outputs.branch }}"
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          buildargs: S6_OVERLAY_VERSION,COMMIT_SHA
+          registry: registry.hub.docker.com
