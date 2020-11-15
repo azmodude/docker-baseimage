@@ -41,9 +41,9 @@ jobs:
           build-args: |
             S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
-            tags: |
-              ghcr.io/azmodude/docker-baseimage:alpine
-              ghcr.io/azmodude/docker-baseimage:alpine-${{env.COMMIT_SHA}}
+          tags: |
+            ghcr.io/azmodude/docker-baseimage:alpine
+            ghcr.io/azmodude/docker-baseimage:alpine-${{env.COMMIT_SHA}}
           push: ${{ github.event_name != 'pull_request' }}
           #tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
