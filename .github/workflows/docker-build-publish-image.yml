@@ -35,8 +35,8 @@ jobs:
             S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
           tags: |
-            ghcr.io/azmodude/base:alpine
-            ghcr.io/azmodude/base:alpine-${{env.COMMIT_SHA}}
+            ghcr.io/azmodude/docker-baseimage/baseimage:alpine
+            ghcr.io/azmodude/docker-baseimage/baseimage:alpine-${{env.COMMIT_SHA}}
       - name: Build and Push Ubuntu-Latest Image to GitHub Packages
         uses: docker/build-push-action@v2
         with:
@@ -46,8 +46,8 @@ jobs:
             S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
           tags: |
-            ghcr.io/azmodude/base:ubuntu-latest
-            ghcr.io/azmodude/base:ubuntu-latest-${{env.COMMIT_SHA}}
+            ghcr.io/azmodude/docker-baseimage/baseimage:ubuntu-latest
+            ghcr.io/azmodude/docker-baseimage/baseimage:ubuntu-latest-${{env.COMMIT_SHA}}
       - name: Build and Push Ubuntu-Rolling Image to GitHub Packages
         uses: docker/build-push-action@v2
         with:
@@ -57,5 +57,5 @@ jobs:
             S6_OVERLAY_VERSION=${{ env.S6_OVERLAY_VERSION }}
             COMMIT_SHA=${{ env.COMMIT_SHA }}
           tags: |
-            ghcr.io/azmodude/base:ubuntu-rolling
-            ghcr.io/azmodude/base:ubuntu-rolling-${{env.COMMIT_SHA}}
+            ghcr.io/azmodude/docker-baseimage/baseimage:ubuntu-rolling
+            ghcr.io/azmodude/docker-baseimage/baseimage:ubuntu-rolling-${{env.COMMIT_SHA}}
