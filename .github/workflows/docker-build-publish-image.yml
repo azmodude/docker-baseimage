@@ -27,7 +27,6 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: ghcr.io/azmodude/baseimage
-          tag-sha: true
       - name: Get commit SHA
         id: get_sha
         run: echo "COMMIT_SHA=${GITHUB_SHA:10}" >> $GITHUB_ENV
