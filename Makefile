@@ -8,7 +8,7 @@
 
 COMMIT_SHA=$(shell git rev-parse HEAD | cut -c 1-10)
 
-all: build-ubuntu-latest build-ubuntu-rolling build-alpine
+all: build-ubuntu-latest build-ubuntu-rolling build-alpine build-fedora
 
 build-ubuntu-latest:
 	$(info COMMIT_SHA=$(COMMIT_SHA))
@@ -26,8 +26,8 @@ build-ubuntu-rolling:
 		-t azmo/base:ubuntu-rolling-$(COMMIT_SHA) .
 build-alpine:
 	$(info COMMIT_SHA=$(COMMIT_SHA))
-	sudo docker build -f Dockerfile.alpine --pull \
+	sudo docker build -f Dockerfile.fedora --pull \
 		--build-arg S6_OVERLAY_VERSION=$(S6_OVERLAY_VERSION) \
 		--build-arg COMMIT_SHA=$(COMMIT_SHA) \
-		-t azmo/base:alpine \
-		-t azmo/base:alpine-$(COMMIT_SHA) .
+		-t azmo/base:fedora \
+		-t azmo/base:fedora-$(COMMIT_SHA) .
