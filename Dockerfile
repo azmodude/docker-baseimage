@@ -9,6 +9,3 @@ RUN curl -s -S -L \
         tar xzf - -C /
 
 ENTRYPOINT ["/init"]
-
-ARG COMMIT_SHA=unspecified
-LABEL commit_sha=${COMMIT_SHA}
