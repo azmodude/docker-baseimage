@@ -1,4 +1,4 @@
-FROM fedora:latest
+FROM fedora:33
 LABEL maintainer="Gordon Schulz <gordon@gordonschulz.de>"
 
 ARG S6_OVERLAY_VERSION
